@@ -11,5 +11,11 @@
     "default_title": "检测图片",
     "default_popup": "popup.html"
   },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["js/getimg.js"]
+    }
+    ],
   "manifest_version": 2
 }

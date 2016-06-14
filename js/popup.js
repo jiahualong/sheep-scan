@@ -6,15 +6,9 @@ function check() {
 
     // chrome.tabs.executeScript(null, {code:"document.body.style.backgroundColor='red'"});
 
-    // chrome.tabs.executeScript(null,
-    //     {code:"document.querySelector('img')"});
-
-    // chrome.tabs.executeScript(null, {code: "var x = 10; x"},
-    //     function (results) {
-    //         document.querySelector('#result').innerHTML = results;
-    // });
-
-    chrome.tabs.executeScript(null, {code: " document.querySelector('img').getAttribute('src')"},
+    chrome.tabs.executeScript(null, 
+        // {code: " document.querySelector('img').getAttribute('src')"},
+        {file: "js/getimg.js"},
         function (results) {
             document.querySelector('#result').innerHTML = results;
     });
