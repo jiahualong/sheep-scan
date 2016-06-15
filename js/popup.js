@@ -6,22 +6,25 @@ function check() {
         {file: "js/getimg.js"},
         function (results) {
 
-            //结果显示
             resultDiv = document.querySelector('#result');
 
             if (results == undefined || results == null || results == '') {
                 setIcon(false);
-                resultDiv.innerHTML = "";
                 document.querySelector('#tip').innerHTML = "未检测到图片";
                 document.querySelector('#tip').classList.remove("disable");
+
+                resultDiv.innerHTML = "";
+
             } else {
                 setIcon(true);
                 document.querySelector('#tip').innerHTML = "";
                 document.querySelector('#tip').classList.add("disable");
-                resultDiv.innerHTML = results;
+
+                for (key in JSON.parse(results)) {
+                    resultDiv.innerHTML += key + "<br />";
+                }
             }
         });
-    // document.querySelector('#result').innerHTML += s;
 }
 
 /** 拷贝内容 */
