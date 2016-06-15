@@ -1,8 +1,14 @@
 * {
-    font-size: 12px;
 }
+
 body {
-    width:400px;
+    width: 400px;
     margin: 0px;
     padding: 0px;
+}
+
+.tips {
+    margin: 10px auto;
+    font-size: 28px;
+    text-align: center;
 }

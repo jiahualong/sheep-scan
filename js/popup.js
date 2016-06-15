@@ -5,7 +5,13 @@ function check() {
         // 使用file方式
         {file: "js/getimg.js"},
         function (results) {
-            document.querySelector('#result').innerHTML = results;
+            if (results == '') {
+                document.querySelector('#result').innerHTML = "未检测到图片";
+                document.querySelector('#result').classList.add("tips");
+            } else {
+                document.querySelector('#result').classList.remove("tips");
+                document.querySelector('#result').innerHTML = results;
+            }
         });
     // document.querySelector('#result').innerHTML += s;
 }
