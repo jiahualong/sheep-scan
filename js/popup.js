@@ -46,27 +46,27 @@ function check() {
 
 /**
  * 拷贝内容
- * @param copyFrom 拷贝源Div
+ * @param _copyFrom 拷贝源Div
  * @param tipArea 拷贝提示信息Div
  */
-/*
- function copyResult(copyFrom, _tipArea) {
+function copyResult() {
+    _copyFrom = document.querySelector("#result");
+    _tipArea = document.querySelector("#tip");
 
- // log();
- log("random");
- if (copyFrom.innerHTML == '') {
- _tipArea.innerHTML = "没有拷贝的信息";
- return;
- }
+    log();
 
- var range = document.createRange();
- range.selectNode(copyFrom);
- window.getSelection().addRange(range);
- var msg = document.execCommand('copy') ? "拷贝完成!" : "拷贝失败";
- _tipArea.innerHTML = msg;
- _tipArea.classList.remove("disable");
- }
- */
+    if (_copyFrom.innerHTML == '') {
+        _tipArea.innerHTML = "没有拷贝的信息";
+        return;
+    }
+
+    var range = document.createRange();
+    range.selectNode(_copyFrom);
+    window.getSelection().addRange(range);
+    var msg = document.execCommand('copy') ? "拷贝完成!" : "拷贝失败";
+    _tipArea.innerHTML = msg;
+    _tipArea.classList.remove("disable");
+}
 
 
 /** 设置图标是否高亮*/
@@ -78,9 +78,21 @@ function setIcon(flag) {
     }
 }
 
+/***********************************************************
+ *
+ *  公共方法
+ *
+ ***********************************************************
+ */
+
+/**
+ * 打印Log
+ * @param randomDiv
+ */
 function log(randomDiv) {
     document.querySelector("#random").innerHTML = randomDiv + Math.random();
 }
+
 /**
  * 检测对象是否为空
  * @param e
@@ -95,19 +107,11 @@ function isEmptyObject(e) {
     return true;
 }
 
+
 /** 启动时加载项 */
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('#check').addEventListener('click', check);
+    document.querySelector('#copyResult').addEventListener('click', copyResult);
+    //chrome.browserAction.onClicked.addListener(check()); //点击图标时进行检测
 });
 
-
-// document.querySelector('#result'),
-//     document.querySelector('#resultImg'),
-//     document.querySelector('#tip')
-
-//绑定拷贝按钮事件
-// document.querySelector('#copyResult').addEventListener('click',
-//     copyResult(document.querySelector('#result'), document.querySelector('#tip')));
-
-//点击图标时进行检测
-//chrome.browserAction.onClicked.addListener(check());
