@@ -7,8 +7,23 @@ body {
     padding: 0px;
 }
 
-.tips {
+button {
+    margin: 10px;
+}
+
+.tip {
     margin: 10px auto;
     font-size: 28px;
+    width: 100%;
     text-align: center;
+}
+
+.disable {
+    display: none;
+}
+
+.result {
+    margin: 10px;
+    width: 100%;
+    text-align: left;
 }

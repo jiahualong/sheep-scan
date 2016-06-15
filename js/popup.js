@@ -5,19 +5,34 @@ function check() {
         // 使用file方式
         {file: "js/getimg.js"},
         function (results) {
-            if (results == '') {
-                document.querySelector('#result').innerHTML = "未检测到图片";
-                document.querySelector('#result').classList.add("tips");
+
+            //结果显示
+            resultDiv = document.querySelector('#result');
+
+            if (results == undefined || results == null || results == '') {
                 setIcon(false);
+                resultDiv.innerHTML = "";
+                document.querySelector('#tip').innerHTML = "未检测到图片";
+                document.querySelector('#tip').classList.remove("disable");
             } else {
-                document.querySelector('#result').classList.remove("tips");
-                document.querySelector('#result').innerHTML = results;
                 setIcon(true);
+                document.querySelector('#tip').innerHTML = "";
+                document.querySelector('#tip').classList.add("disable");
+                resultDiv.innerHTML = results;
             }
         });
     // document.querySelector('#result').innerHTML += s;
 }
 
+/** 拷贝内容 */
+function copyResult() {
+    var range = document.createRange();
+    range.selectNode(document.querySelector('#result'));
+    window.getSelection().addRange(range);
+    var msg = document.execCommand('copy') ? "拷贝完成!" : "拷贝失败";
+    document.querySelector('#tip').innerHTML = msg;
+    document.querySelector('#tip').classList.remove("disable");
+}
 
 /** 设置图标是否高亮*/
 function setIcon(flag) {
@@ -35,6 +50,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //绑定再次检测按钮
     document.querySelector('#check').addEventListener('click', check);
+
+    //绑定拷贝按钮
+    document.querySelector('#copyResult').addEventListener('click', copyResult);
 
     //点击图标时进行检测
     //chrome.browserAction.onClicked.addListener(check());

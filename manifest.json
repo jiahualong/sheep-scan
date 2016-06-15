@@ -1,11 +1,13 @@
 {
   "name": "图片检测",
   "description": "检测页面中的图片",
-  "version": "0.1",
+  "version": "0.3",
   "permissions": [
     "http://*/*",
     "https://*/*",
-    "tabs"
+    "tabs",
+    "background",
+    "clipboardWrite"
   ],
   "browser_action": {
     "default_title": "检测图片",
@@ -16,12 +18,21 @@
       "128": "img/128x128.png"
     }
   },
-  "background": { "scripts": ["js/background.js"] },
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ]
+  },
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
-      "js": ["js/getimg.js"]
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "js/getimg.js"
+      ]
     }
-    ],
+  ],
   "manifest_version": 2
 }
