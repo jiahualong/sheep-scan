@@ -2,10 +2,16 @@ var imgs = document.querySelectorAll('img');
 var urls = {};
 for (i = 0; i < imgs.length; i++) {
 
-    if (urls[imgs[i].getAttribute('src')]) {
-        urls[imgs[i].getAttribute('src')] += 1;
+    var url = imgs[i].getAttribute('src');
+    if (url.match("^http://") || url.match("^https://")) {
     } else {
-        urls[imgs[i].getAttribute('src')] = 1;
+        url = window.location.protocol + "//" + window.location.hostname + url;
+    }
+
+    if (urls[url]) {
+        urls[url] += 1;
+    } else {
+        urls[url] = 1;
     }
 
 }

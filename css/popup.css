@@ -35,7 +35,7 @@ button {
     text-align: left;
 }
 
-.resultImg img {
-    margin: 10px;
-    border-bottom: 1px solid grey;
+.resultImg > img {
+    margin: 10px 0 0 0;
+    border: 5px solid darkgray;
 }
