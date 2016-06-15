@@ -8,12 +8,24 @@ function check() {
             if (results == '') {
                 document.querySelector('#result').innerHTML = "未检测到图片";
                 document.querySelector('#result').classList.add("tips");
+                setIcon(false);
             } else {
                 document.querySelector('#result').classList.remove("tips");
                 document.querySelector('#result').innerHTML = results;
+                setIcon(true);
             }
         });
     // document.querySelector('#result').innerHTML += s;
+}
+
+
+/** 设置图标是否高亮*/
+function setIcon(flag) {
+    if (flag) {
+        chrome.browserAction.setIcon({path: "img/32x32.png"});
+    } else {
+        chrome.browserAction.setIcon({path: "img/32x32-offline.png"});
+    }
 }
 
 /** 启动时加载项 */
