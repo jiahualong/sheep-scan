@@ -1,40 +1,23 @@
 /** 检测图片 */
 function check() {
-
-    // var s = chrome.extension.getBackgroundPage();
-    // document.querySelector('#result').innerHTML = s;
-
-    // chrome.tabs.executeScript(null, {code:"document.body.style.backgroundColor='red'"});
-
-    chrome.tabs.executeScript(null, 
+    chrome.tabs.executeScript(null,
         // {code: " document.querySelector('img').getAttribute('src')"},
+        // 使用file方式
         {file: "js/getimg.js"},
         function (results) {
             document.querySelector('#result').innerHTML = results;
-    });
-
-
-    // document.querySelector('#result').innerHTML = "abc";
-
-    // document.querySelector("img").innerHTML ="123";
-
-    // for (i = 0; i < imgs.length; i++) {
-    // document.querySelector('#result').innerHTML += imgs[i].getAttribute('src') + "<br />";
-    // document.querySelector('#result').innerHTML += "hello<br />"
-    // }
-
+        });
+    // document.querySelector('#result').innerHTML += s;
 }
 
-
+/** 启动时加载项 */
 document.addEventListener('DOMContentLoaded', function () {
+    //加载时检测
+    check();
+
+    //绑定再次检测按钮
     document.querySelector('#check').addEventListener('click', check);
-    /*
-     chrome.browserAction.onClicked.addListener(function (tab) {
-     chrome.tabs.executeScript(null,
-     {code: "document.body.bgColor='red'"});
-     });
-     */
 
+    //点击图标时进行检测
+    //chrome.browserAction.onClicked.addListener(check());
 });
-
-

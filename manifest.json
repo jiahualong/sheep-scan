@@ -9,7 +9,12 @@
   ],
   "browser_action": {
     "default_title": "检测图片",
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": {
+      "32": "img/32x32.png",
+      "64": "img/64x64.png",
+      "128": "img/128x128.png"
+    }
   },
   "content_scripts": [
     {
