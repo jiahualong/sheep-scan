@@ -1,8 +1,41 @@
 * {
-    font-size: 12px;
 }
+
 body {
-    width:400px;
+    width: 500px;
     margin: 0px;
     padding: 0px;
+}
+
+button {
+    margin: 10px;
+}
+
+.tip {
+    margin: 10px auto;
+    font-size: 28px;
+    width: 100%;
+    text-align: center;
+}
+
+.disable {
+    display: none;
+}
+
+.result {
+    margin: 10px;
+    width: 100%;
+    text-align: left;
+    border-top: 1px solid grey;
+}
+
+.resultImg {
+    margin: 10px;
+    width: 100%;
+    text-align: left;
+}
+
+.resultImg > img {
+    margin: 10px 0 0 0;
+    border: 5px solid darkgray;
 }
