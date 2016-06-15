@@ -29,6 +29,12 @@ function check() {
 
 /** 拷贝内容 */
 function copyResult() {
+
+    if (document.querySelector('#result').innerHTML == '') {
+        document.querySelector('#tip').innerHTML = "没有拷贝的信息";
+        return;
+    }
+
     var range = document.createRange();
     range.selectNode(document.querySelector('#result'));
     window.getSelection().addRange(range);
