@@ -26,4 +26,16 @@ button {
     margin: 10px;
     width: 100%;
     text-align: left;
+    border-top: 1px solid grey;
+}
+
+.resultImg {
+    margin: 10px;
+    width: 100%;
+    text-align: left;
+}
+
+.resultImg img {
+    margin: 10px;
+    border-bottom: 1px solid grey;
 }

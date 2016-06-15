@@ -7,6 +7,7 @@ function check() {
         function (results) {
 
             resultDiv = document.querySelector('#result');
+            resultImgDiv = document.querySelector('#resultImg');
 
             if (results == undefined || results == null || results == '') {
                 setIcon(false);
@@ -14,6 +15,7 @@ function check() {
                 document.querySelector('#tip').classList.remove("disable");
 
                 resultDiv.innerHTML = "";
+                resultImgDiv.innerHTML = "";
 
             } else {
                 setIcon(true);
@@ -22,6 +24,7 @@ function check() {
 
                 for (key in JSON.parse(results)) {
                     resultDiv.innerHTML += key + "<br />";
+                    resultImgDiv.innerHTML += "<img src='"+ key + "' /><br />";
                 }
             }
         });
@@ -29,7 +32,8 @@ function check() {
 
 /** 拷贝内容 */
 function copyResult() {
-
+    webkitNotifications.createHTMLNotification('/views/update.html').show();
+    
     if (document.querySelector('#result').innerHTML == '') {
         document.querySelector('#tip').innerHTML = "没有拷贝的信息";
         return;
