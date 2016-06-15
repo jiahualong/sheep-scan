@@ -11,6 +11,13 @@ button {
     margin: 10px;
 }
 
+.random {
+    margin: 10px auto;
+    font-size: 11px;
+    width: 100%;
+    text-align: left;
+}
+
 .tip {
     margin: 10px auto;
     font-size: 28px;

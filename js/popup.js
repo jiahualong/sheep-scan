@@ -1,24 +1,44 @@
+/***********************************************************************
+ *
+ *  获取图片popup.js
+ *  stane.jia@gmail.com
+ *
+ ***********************************************************************
+ */
 /** 检测图片 */
-function check(resultArea, resultImgArea, tipArea) {
+function check() {
+
+    _tipArea = document.querySelector("#tip");
+    _resultArea = document.querySelector("#result");
+    _resultImgArea = document.querySelector("#resultImg");
+
+    _tipArea.innerHTML = "";
+    _resultArea.innerHTML = "";
+    _resultImgArea.innerHTML = "";
+
+    log();
+
     chrome.tabs.executeScript(
-        // {code: " document.querySelector('img').getAttribute('src')"},
         null, {file: "js/getimg.js"},
-        function (results) {
+        function (imagesJSONList) {
+            imagesJSONList = JSON.parse(imagesJSONList);
 
-            if (results == undefined || results == null || results == '') {
+            if (isEmptyObject(imagesJSONList)) {
                 setIcon(false);
-                tipArea.innerHTML = "未检测到图片";
-                tipArea.classList.remove("disable");
-                resultArea.innerHTML = "";
-                resultImgArea.innerHTML = "";
-            } else {
-                setIcon(true);
-                tipArea.innerHTML = "";
-                tipArea.classList.add("disable");
-                for (key in JSON.parse(results)) {
+                _tipArea.innerHTML = "未检测到图片";
+                _tipArea.classList.remove("disable");
+                _resultArea.innerHTML = "";
+                _resultImgArea.innerHTML = "";
 
-                    resultArea.innerHTML += key + "<br />";
-                    resultImgArea.innerHTML += "<img src='" + key + "' /><br />";
+            } else {
+
+                setIcon(true);
+                _tipArea.innerHTML = "";
+                _tipArea.classList.add("disable");
+
+                for (key in imagesJSONList) {
+                    _resultArea.innerHTML += key + "<br />";
+                    _resultImgArea.innerHTML += "<img src='" + key + "' /><br />";
                 }
             }
         });
@@ -29,20 +49,24 @@ function check(resultArea, resultImgArea, tipArea) {
  * @param copyFrom 拷贝源Div
  * @param tipArea 拷贝提示信息Div
  */
-function copyResult(copyFrom, tipArea) {
+/*
+ function copyResult(copyFrom, _tipArea) {
 
-    if (copyFrom.innerHTML == '') {
-        tipArea.innerHTML = "没有拷贝的信息";
-        return;
-    }
+ // log();
+ log("random");
+ if (copyFrom.innerHTML == '') {
+ _tipArea.innerHTML = "没有拷贝的信息";
+ return;
+ }
 
-    var range = document.createRange();
-    range.selectNode(copyFrom);
-    window.getSelection().addRange(range);
-    var msg = document.execCommand('copy') ? "拷贝完成!" : "拷贝失败";
-    tipArea.innerHTML = msg;
-    tipArea.classList.remove("disable");
-}
+ var range = document.createRange();
+ range.selectNode(copyFrom);
+ window.getSelection().addRange(range);
+ var msg = document.execCommand('copy') ? "拷贝完成!" : "拷贝失败";
+ _tipArea.innerHTML = msg;
+ _tipArea.classList.remove("disable");
+ }
+ */
 
 
 /** 设置图标是否高亮*/
@@ -54,20 +78,36 @@ function setIcon(flag) {
     }
 }
 
+function log(randomDiv) {
+    document.querySelector("#random").innerHTML = randomDiv + Math.random();
+}
+/**
+ * 检测对象是否为空
+ * @param e
+ * @returns {number}
+ */
+function isEmptyObject(e) {
+    if (undefined == e || null == e || '' == e)
+        return true;
+    var t;
+    for (t in e)
+        return false;
+    return true;
+}
+
 /** 启动时加载项 */
 document.addEventListener('DOMContentLoaded', function () {
-
-    //绑定检测按钮事件
-    document.querySelector('#check').addEventListener('click', check(
-        document.querySelector('#result'),
-        document.querySelector('#resultImg'),
-        document.querySelector('#tip')
-    ));
-
-    //绑定拷贝按钮事件
-    document.querySelector('#copyResult').addEventListener('click',
-        copyResult(document.querySelector('#result'), document.querySelector('#tip')));
-
-    //点击图标时进行检测
-    //chrome.browserAction.onClicked.addListener(check());
+    document.querySelector('#check').addEventListener('click', check);
 });
+
+
+// document.querySelector('#result'),
+//     document.querySelector('#resultImg'),
+//     document.querySelector('#tip')
+
+//绑定拷贝按钮事件
+// document.querySelector('#copyResult').addEventListener('click',
+//     copyResult(document.querySelector('#result'), document.querySelector('#tip')));
+
+//点击图标时进行检测
+//chrome.browserAction.onClicked.addListener(check());
