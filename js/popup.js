@@ -1,51 +1,49 @@
 /** 检测图片 */
-function check() {
-    chrome.tabs.executeScript(null,
+function check(resultArea, resultImgArea, tipArea) {
+    chrome.tabs.executeScript(
         // {code: " document.querySelector('img').getAttribute('src')"},
-        // 使用file方式
-        {file: "js/getimg.js"},
+        null, {file: "js/getimg.js"},
         function (results) {
-
-            resultDiv = document.querySelector('#result');
-            resultImgDiv = document.querySelector('#resultImg');
 
             if (results == undefined || results == null || results == '') {
                 setIcon(false);
-                document.querySelector('#tip').innerHTML = "未检测到图片";
-                document.querySelector('#tip').classList.remove("disable");
-
-                resultDiv.innerHTML = "";
-                resultImgDiv.innerHTML = "";
-
+                tipArea.innerHTML = "未检测到图片";
+                tipArea.classList.remove("disable");
+                resultArea.innerHTML = "";
+                resultImgArea.innerHTML = "";
             } else {
                 setIcon(true);
-                document.querySelector('#tip').innerHTML = "";
-                document.querySelector('#tip').classList.add("disable");
-
+                tipArea.innerHTML = "";
+                tipArea.classList.add("disable");
                 for (key in JSON.parse(results)) {
-                    resultDiv.innerHTML += key + "<br />";
-                    resultImgDiv.innerHTML += "<img src='"+ key + "' /><br />";
+
+                    resultArea.innerHTML += key + "<br />";
+                    resultImgArea.innerHTML += "<img src='" + key + "' /><br />";
                 }
             }
         });
 }
 
-/** 拷贝内容 */
-function copyResult() {
-    webkitNotifications.createHTMLNotification('/views/update.html').show();
-    
-    if (document.querySelector('#result').innerHTML == '') {
-        document.querySelector('#tip').innerHTML = "没有拷贝的信息";
+/**
+ * 拷贝内容
+ * @param copyFrom 拷贝源Div
+ * @param tipArea 拷贝提示信息Div
+ */
+function copyResult(copyFrom, tipArea) {
+
+    if (copyFrom.innerHTML == '') {
+        tipArea.innerHTML = "没有拷贝的信息";
         return;
     }
 
     var range = document.createRange();
-    range.selectNode(document.querySelector('#result'));
+    range.selectNode(copyFrom);
     window.getSelection().addRange(range);
     var msg = document.execCommand('copy') ? "拷贝完成!" : "拷贝失败";
-    document.querySelector('#tip').innerHTML = msg;
-    document.querySelector('#tip').classList.remove("disable");
+    tipArea.innerHTML = msg;
+    tipArea.classList.remove("disable");
 }
+
 
 /** 设置图标是否高亮*/
 function setIcon(flag) {
@@ -58,14 +56,17 @@ function setIcon(flag) {
 
 /** 启动时加载项 */
 document.addEventListener('DOMContentLoaded', function () {
-    //加载时检测
-    check();
 
-    //绑定再次检测按钮
-    document.querySelector('#check').addEventListener('click', check);
+    //绑定检测按钮事件
+    document.querySelector('#check').addEventListener('click', check(
+        document.querySelector('#result'),
+        document.querySelector('#resultImg'),
+        document.querySelector('#tip')
+    ));
 
-    //绑定拷贝按钮
-    document.querySelector('#copyResult').addEventListener('click', copyResult);
+    //绑定拷贝按钮事件
+    document.querySelector('#copyResult').addEventListener('click',
+        copyResult(document.querySelector('#result'), document.querySelector('#tip')));
 
     //点击图标时进行检测
     //chrome.browserAction.onClicked.addListener(check());
