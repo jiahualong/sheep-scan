@@ -7,7 +7,8 @@
     "https://*/*",
     "tabs",
     "background",
-    "clipboardWrite"
+    "clipboardWrite",
+    "downloads"
   ],
   "browser_action": {
     "default_title": "检测图片",

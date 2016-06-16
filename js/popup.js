@@ -5,14 +5,15 @@
  *
  ***********************************************************************
  */
+var imagesList = {};
+var imagesURL = "";
+
 /** 检测图片 */
 function check() {
 
-    _tipArea = document.querySelector("#tip");
     _resultArea = document.querySelector("#result");
     _resultImgArea = document.querySelector("#resultImg");
 
-    _tipArea.innerHTML = "";
     _resultArea.innerHTML = "";
     _resultImgArea.innerHTML = "";
 
@@ -21,24 +22,23 @@ function check() {
     chrome.tabs.executeScript(
         null, {file: "js/getimg.js"},
         function (imagesJSONList) {
-            imagesJSONList = JSON.parse(imagesJSONList);
+            var _imagesJSONList = JSON.parse(imagesJSONList);
 
-            if (isEmptyObject(imagesJSONList)) {
+            if (isEmptyObject(_imagesJSONList)) {
                 setIcon(false);
-                _tipArea.innerHTML = "未检测到图片";
-                _tipArea.classList.remove("disable");
+                log("未检测到图片")
                 _resultArea.innerHTML = "";
                 _resultImgArea.innerHTML = "";
 
             } else {
-
+                imagesList = _imagesJSONList;
                 setIcon(true);
-                _tipArea.innerHTML = "";
-                _tipArea.classList.add("disable");
+                log("检测完成");
 
-                for (key in imagesJSONList) {
+                for (key in _imagesJSONList) {
                     _resultArea.innerHTML += key + "<br />";
                     _resultImgArea.innerHTML += "<img src='" + key + "' /><br />";
+                    imagesURL = key;
                 }
             }
         });
@@ -51,12 +51,11 @@ function check() {
  */
 function copyResult() {
     _copyFrom = document.querySelector("#result");
-    _tipArea = document.querySelector("#tip");
 
     log();
 
     if (_copyFrom.innerHTML == '') {
-        _tipArea.innerHTML = "没有拷贝的信息";
+        log("没有拷贝的信息");
         return;
     }
 
@@ -64,10 +63,22 @@ function copyResult() {
     range.selectNode(_copyFrom);
     window.getSelection().addRange(range);
     var msg = document.execCommand('copy') ? "拷贝完成!" : "拷贝失败";
-    _tipArea.innerHTML = msg;
-    _tipArea.classList.remove("disable");
+    log(msg);
 }
 
+/**
+ * 下载最后一张图片
+ */
+function downloadPic() {
+    log("下载图片中");
+    var url;
+    for (url in imagesList) {
+        chrome.downloads.download({url: url},
+            function (id) {
+            });
+    }
+    log("下载完成");
+}
 
 /** 设置图标是否高亮*/
 function setIcon(flag) {
@@ -87,10 +98,13 @@ function setIcon(flag) {
 
 /**
  * 打印Log
- * @param randomDiv
+ * @param msg
  */
-function log(randomDiv) {
-    document.querySelector("#tip").innerHTML = randomDiv + Math.random();
+function log(msg) {
+    if (isEmptyObject(msg))
+        msg = Math.random();
+    document.querySelector("#tip").classList.remove("disable");
+    document.querySelector("#tip").innerHTML = msg;
 }
 
 /**
@@ -113,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
     check();
     document.querySelector('#check').addEventListener('click', check);
     document.querySelector('#copyResult').addEventListener('click', copyResult);
+    document.querySelector('#downloadPic').addEventListener('click', downloadPic);
     //chrome.browserAction.onClicked.addListener(check()); //点击图标时进行检测
 });
 
