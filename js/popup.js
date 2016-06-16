@@ -90,7 +90,7 @@ function setIcon(flag) {
  * @param randomDiv
  */
 function log(randomDiv) {
-    document.querySelector("#random").innerHTML = randomDiv + Math.random();
+    document.querySelector("#tip").innerHTML = randomDiv + Math.random();
 }
 
 /**
@@ -110,6 +110,7 @@ function isEmptyObject(e) {
 
 /** 启动时加载项 */
 document.addEventListener('DOMContentLoaded', function () {
+    check();
     document.querySelector('#check').addEventListener('click', check);
     document.querySelector('#copyResult').addEventListener('click', copyResult);
     //chrome.browserAction.onClicked.addListener(check()); //点击图标时进行检测
