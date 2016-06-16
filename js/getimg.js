@@ -1,5 +1,6 @@
 var imgs = document.querySelectorAll('img');
 var urls = {};
+console.log(imgs.length);
 for (i = 0; i < imgs.length; i++) {
 
     var url = imgs[i].getAttribute('src');
@@ -15,4 +16,6 @@ for (i = 0; i < imgs.length; i++) {
     }
 
 }
-JSON.stringify(urls)
+console.log(JSON.stringify(urls));
+JSON.stringify(urls);
+

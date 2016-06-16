@@ -1,51 +1,73 @@
+/***********************************************************************
+ *
+ *  获取图片popup.js
+ *  stane.jia@gmail.com
+ *
+ ***********************************************************************
+ */
 /** 检测图片 */
 function check() {
-    chrome.tabs.executeScript(null,
-        // {code: " document.querySelector('img').getAttribute('src')"},
-        // 使用file方式
-        {file: "js/getimg.js"},
-        function (results) {
 
-            resultDiv = document.querySelector('#result');
-            resultImgDiv = document.querySelector('#resultImg');
+    _tipArea = document.querySelector("#tip");
+    _resultArea = document.querySelector("#result");
+    _resultImgArea = document.querySelector("#resultImg");
 
-            if (results == undefined || results == null || results == '') {
+    _tipArea.innerHTML = "";
+    _resultArea.innerHTML = "";
+    _resultImgArea.innerHTML = "";
+
+    log();
+
+    chrome.tabs.executeScript(
+        null, {file: "js/getimg.js"},
+        function (imagesJSONList) {
+            imagesJSONList = JSON.parse(imagesJSONList);
+
+            if (isEmptyObject(imagesJSONList)) {
                 setIcon(false);
-                document.querySelector('#tip').innerHTML = "未检测到图片";
-                document.querySelector('#tip').classList.remove("disable");
-
-                resultDiv.innerHTML = "";
-                resultImgDiv.innerHTML = "";
+                _tipArea.innerHTML = "未检测到图片";
+                _tipArea.classList.remove("disable");
+                _resultArea.innerHTML = "";
+                _resultImgArea.innerHTML = "";
 
             } else {
-                setIcon(true);
-                document.querySelector('#tip').innerHTML = "";
-                document.querySelector('#tip').classList.add("disable");
 
-                for (key in JSON.parse(results)) {
-                    resultDiv.innerHTML += key + "<br />";
-                    resultImgDiv.innerHTML += "<img src='"+ key + "' /><br />";
+                setIcon(true);
+                _tipArea.innerHTML = "";
+                _tipArea.classList.add("disable");
+
+                for (key in imagesJSONList) {
+                    _resultArea.innerHTML += key + "<br />";
+                    _resultImgArea.innerHTML += "<img src='" + key + "' /><br />";
                 }
             }
         });
 }
 
-/** 拷贝内容 */
+/**
+ * 拷贝内容
+ * @param _copyFrom 拷贝源Div
+ * @param tipArea 拷贝提示信息Div
+ */
 function copyResult() {
-    webkitNotifications.createHTMLNotification('/views/update.html').show();
-    
-    if (document.querySelector('#result').innerHTML == '') {
-        document.querySelector('#tip').innerHTML = "没有拷贝的信息";
+    _copyFrom = document.querySelector("#result");
+    _tipArea = document.querySelector("#tip");
+
+    log();
+
+    if (_copyFrom.innerHTML == '') {
+        _tipArea.innerHTML = "没有拷贝的信息";
         return;
     }
 
     var range = document.createRange();
-    range.selectNode(document.querySelector('#result'));
+    range.selectNode(_copyFrom);
     window.getSelection().addRange(range);
     var msg = document.execCommand('copy') ? "拷贝完成!" : "拷贝失败";
-    document.querySelector('#tip').innerHTML = msg;
-    document.querySelector('#tip').classList.remove("disable");
+    _tipArea.innerHTML = msg;
+    _tipArea.classList.remove("disable");
 }
+
 
 /** 设置图标是否高亮*/
 function setIcon(flag) {
@@ -56,17 +78,41 @@ function setIcon(flag) {
     }
 }
 
+/***********************************************************
+ *
+ *  公共方法
+ *
+ ***********************************************************
+ */
+
+/**
+ * 打印Log
+ * @param randomDiv
+ */
+function log(randomDiv) {
+    document.querySelector("#tip").innerHTML = randomDiv + Math.random();
+}
+
+/**
+ * 检测对象是否为空
+ * @param e
+ * @returns {number}
+ */
+function isEmptyObject(e) {
+    if (undefined == e || null == e || '' == e)
+        return true;
+    var t;
+    for (t in e)
+        return false;
+    return true;
+}
+
+
 /** 启动时加载项 */
 document.addEventListener('DOMContentLoaded', function () {
-    //加载时检测
     check();
-
-    //绑定再次检测按钮
     document.querySelector('#check').addEventListener('click', check);
-
-    //绑定拷贝按钮
     document.querySelector('#copyResult').addEventListener('click', copyResult);
-
-    //点击图标时进行检测
-    //chrome.browserAction.onClicked.addListener(check());
+    //chrome.browserAction.onClicked.addListener(check()); //点击图标时进行检测
 });
+
