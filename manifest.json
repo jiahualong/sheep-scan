@@ -26,7 +26,8 @@
         "https://*/*"
       ],
       "js": [
-        "js/getimg.js"
+        "js/getimg.js",
+        "js/getTitle.js"
       ]
     }
   ],

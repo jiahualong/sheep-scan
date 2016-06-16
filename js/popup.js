@@ -7,6 +7,7 @@
  */
 var imagesList = {};
 var imagesURL = "";
+var imagesIndex= 0;
 
 /** 检测图片 */
 function check() {
@@ -25,14 +26,14 @@ function check() {
             var _imagesJSONList = JSON.parse(imagesJSONList);
 
             if (isEmptyObject(_imagesJSONList)) {
-                setIcon(false);
+                setIconOff();
                 log("未检测到图片")
                 _resultArea.innerHTML = "";
                 _resultImgArea.innerHTML = "";
 
             } else {
                 imagesList = _imagesJSONList;
-                setIcon(true);
+                setIconOn();
                 log("检测完成");
 
                 for (key in _imagesJSONList) {
@@ -70,56 +71,23 @@ function copyResult() {
  * 下载最后一张图片
  */
 function downloadPic() {
-    log("下载图片中");
+    
+    imagesIndex++;
+    var title = getTitle();
+    // log("下载图片中");
+    log(title);
     var url;
     for (url in imagesList) {
         chrome.downloads.download({url: url},
             function (id) {
             });
     }
-    log("下载完成");
+    // log("下载完成");
 }
 
-/** 设置图标是否高亮*/
-function setIcon(flag) {
-    if (flag) {
-        chrome.browserAction.setIcon({path: "img/32x32.png"});
-    } else {
-        chrome.browserAction.setIcon({path: "img/32x32-offline.png"});
-    }
-}
 
-/***********************************************************
- *
- *  公共方法
- *
- ***********************************************************
- */
 
-/**
- * 打印Log
- * @param msg
- */
-function log(msg) {
-    if (isEmptyObject(msg))
-        msg = Math.random();
-    document.querySelector("#tip").classList.remove("disable");
-    document.querySelector("#tip").innerHTML = msg;
-}
 
-/**
- * 检测对象是否为空
- * @param e
- * @returns {number}
- */
-function isEmptyObject(e) {
-    if (undefined == e || null == e || '' == e)
-        return true;
-    var t;
-    for (t in e)
-        return false;
-    return true;
-}
 
 
 /** 启动时加载项 */
@@ -128,6 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('#check').addEventListener('click', check);
     document.querySelector('#copyResult').addEventListener('click', copyResult);
     document.querySelector('#downloadPic').addEventListener('click', downloadPic);
+    document.querySelector('#testButton').addEventListener('click', getTitle);
     //chrome.browserAction.onClicked.addListener(check()); //点击图标时进行检测
 });
 
