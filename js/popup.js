@@ -38,7 +38,8 @@ function check() {
 
                 var i;
                 for (i = 0; i < _imagesJSONList.length; i++) {
-                    db = addUrlData(genUrlData(_imagesJSONList[i]), db);
+                    db = DBFun.addUrlData(_imagesJSONList[i], db);
+
                     _resultArea.innerHTML += _imagesJSONList[i].url + "<br />";
                     _resultImgArea.innerHTML += "<img src='" + _imagesJSONList[i].url + "' /><br />";
                 }
