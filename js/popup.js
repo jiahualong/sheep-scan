@@ -5,9 +5,9 @@
  *
  ***********************************************************************
  */
-var db = {"data": []};
 var imagesList = {};
 var imagesIndex = 0;
+var db = {};
 
 /** 检测图片 */
 function check() {
@@ -93,6 +93,7 @@ function downloadPic() {
  * 显示DB内容
  */
 function showDB() {
+    var db = chrome.extension.getBackgroundPage().db;
     var dbinfo = document.querySelector("#dbinfo");
     if (dbinfo.classList.contains("disable")) {
         dbinfo.innerHTML = JSON.stringify(db);
@@ -111,6 +112,17 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('#downloadPic').addEventListener('click', downloadPic);
     document.querySelector('#testButton').addEventListener('click', showDB);
     //chrome.browserAction.onClicked.addListener(check()); //点击图标时进行检测
+
+    document.querySelector('#saveDB').addEventListener('click', saveDB);
+    document.querySelector('#readDB').addEventListener('click', readDB);
 });
 
 
+function saveDB() {
+    window.localStorage['db'] = JSON.stringify({"myvalue": 123});
+    window.localStorage.setItem('hello', 'world');
+}
+
+function readDB() {
+    log(window.localStorage.getItem('db'));
+}
