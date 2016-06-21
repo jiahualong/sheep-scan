@@ -46,7 +46,12 @@ function getTitle() {
 
     log(_title); //没有值
     // return _title;
+    
 }
+
+
+
+
 
 /** 设置图标是否高亮*/
 function setIcon(flag) {

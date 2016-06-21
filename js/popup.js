@@ -5,9 +5,9 @@
  *
  ***********************************************************************
  */
+var db = {"data": []};
 var imagesList = {};
-var imagesURL = "";
-var imagesIndex= 0;
+var imagesIndex = 0;
 
 /** 检测图片 */
 function check() {
@@ -36,13 +36,16 @@ function check() {
                 setIconOn();
                 log("检测完成");
 
-                for (key in _imagesJSONList) {
-                    _resultArea.innerHTML += key + "<br />";
-                    _resultImgArea.innerHTML += "<img src='" + key + "' /><br />";
-                    imagesURL = key;
+                var i;
+                for (i = 0; i < _imagesJSONList.length; i++) {
+                    db = addUrlData(genUrlData(_imagesJSONList[i]), db);
+                    _resultArea.innerHTML += _imagesJSONList[i].url + "<br />";
+                    _resultImgArea.innerHTML += "<img src='" + _imagesJSONList[i].url + "' /><br />";
                 }
+                log("db内容:" + printData(db));
             }
         });
+
 }
 
 /**
@@ -71,7 +74,7 @@ function copyResult() {
  * 下载最后一张图片
  */
 function downloadPic() {
-    
+
     imagesIndex++;
     var title = getTitle();
     // log("下载图片中");
@@ -85,9 +88,18 @@ function downloadPic() {
     // log("下载完成");
 }
 
-
-
-
+/**
+ * 显示DB内容
+ */
+function showDB() {
+    var dbinfo = document.querySelector("#dbinfo");
+    if (dbinfo.classList.contains("disable")) {
+        dbinfo.innerHTML = JSON.stringify(db);
+        dbinfo.classList.remove("disable");
+    } else {
+        dbinfo.classList.add("disable");
+    }
+}
 
 
 /** 启动时加载项 */
@@ -96,7 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('#check').addEventListener('click', check);
     document.querySelector('#copyResult').addEventListener('click', copyResult);
     document.querySelector('#downloadPic').addEventListener('click', downloadPic);
-    document.querySelector('#testButton').addEventListener('click', getTitle);
+    document.querySelector('#testButton').addEventListener('click', showDB);
     //chrome.browserAction.onClicked.addListener(check()); //点击图标时进行检测
 });
+
 

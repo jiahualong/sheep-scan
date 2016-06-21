@@ -1,14 +1,14 @@
 /**
- * 向变量中添加东西
+ * 向变量中添加新的URL
  * @param data
  */
-function pushData(urlData, allData) {
-    if (null == getItemFromDBByUrl(urlData.url, allData)) {
+function addUrlData(urlData, db) {
+    if (null == getItemFromDBByUrl(urlData.url, db)) {
         console.log("not get it !");
-        allData.data.push(urlData);
+        db.data.push(urlData);
     }
     console.log("get it!");
-    return allData;
+    return db;
 }
 
 /**
@@ -61,13 +61,12 @@ function printData(db) {
  * ------------------------------------------------------------
  */
 
-var db = {"data": []};
 
 /*
  //添加新条目
  var _tmpUrl = "http://www.hello.com";
  var _tmpDir = "hello";
- db = pushData(genUrlData(_tmpUrl, false, _tmpDir), db);
+ db = addUrlData(genUrlData(_tmpUrl, false, _tmpDir), db);
 
  printData(db);
  */
