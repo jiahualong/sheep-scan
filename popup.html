@@ -2,7 +2,6 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/popup.css">
-    <script src="js/DBFun.js"></script>
     <script src="js/commons.js"></script>
     <script src="js/popup.js"></script>
 </head>
@@ -11,14 +10,11 @@
     <button id="check">检测图片</button>
     <button id="copyResult">拷贝链接</button>
     <button id="downloadPic">下载图片</button>
-    <button id="testButton">显示DB内容</button>
-
-    <button id="saveDB">saveDB</button>
-    <button id="readDB">readDB</button>
-
-    <div id="tip" class="tip">info</div>
+    <button id="clearStorage">清除保存的图片链接</button>
+    <button id="readStorage">读取store中的值</button>
 </div>
-<div id="dbinfo" class="dbinfo disable"></div>
+<div id="tip" class="tip">info</div>
+<div id="dbinfo" class="dbinfo"></div>
 <div id="resultImg" class="resultImg"></div>
 <div id="result" class="result"></div>
 </body>

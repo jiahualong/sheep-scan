@@ -7,7 +7,6 @@
  */
 var imagesList = {};
 var imagesIndex = 0;
-var db = {};
 
 /** 检测图片 */
 function check() {
@@ -38,12 +37,13 @@ function check() {
 
                 var i;
                 for (i = 0; i < _imagesJSONList.length; i++) {
-                    db = DBFun.addUrlData(_imagesJSONList[i], db);
-
-                    _resultArea.innerHTML += _imagesJSONList[i].url + "<br />";
-                    _resultImgArea.innerHTML += "<img src='" + _imagesJSONList[i].url + "' /><br />";
+                    if (window.localStorage[_imagesJSONList[i].url]) {
+                    } else {
+                        window.localStorage[_imagesJSONList[i].url] = JSON.stringify(_imagesJSONList[i]);
+                        _resultArea.innerHTML += _imagesJSONList[i].url + "<br />";
+                        _resultImgArea.innerHTML += "<img src='" + _imagesJSONList[i].url + "' /><br />";
+                    }
                 }
-                log("db内容:" + printData(db));
             }
         });
 
@@ -103,6 +103,23 @@ function showDB() {
     }
 }
 
+/**
+ * *************************************************
+ * window.storage存储
+ * *************************************************
+ */
+function clearStorage() {
+    window.localStorage.clear();
+}
+
+function readStorage() {
+    var content = [];
+    for (var i = 0; i < window.localStorage.length; i++) {
+        content.push(JSON.parse(window.localStorage.getItem(window.localStorage.key(i))));
+    }
+    document.querySelector('#dbinfo').innerHTML = JSON.stringify(content);
+    return content;
+}
 
 /** 启动时加载项 */
 document.addEventListener('DOMContentLoaded', function () {
@@ -110,19 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('#check').addEventListener('click', check);
     document.querySelector('#copyResult').addEventListener('click', copyResult);
     document.querySelector('#downloadPic').addEventListener('click', downloadPic);
-    document.querySelector('#testButton').addEventListener('click', showDB);
-    //chrome.browserAction.onClicked.addListener(check()); //点击图标时进行检测
-
-    document.querySelector('#saveDB').addEventListener('click', saveDB);
-    document.querySelector('#readDB').addEventListener('click', readDB);
+    document.querySelector('#clearStorage').addEventListener('click', clearStorage);
+    document.querySelector('#readStorage').addEventListener('click', readStorage);
 });
 
-
-function saveDB() {
-    window.localStorage['db'] = JSON.stringify({"myvalue": 123});
-    window.localStorage.setItem('hello', 'world');
-}
-
-function readDB() {
-    log(window.localStorage.getItem('db'));
-}
