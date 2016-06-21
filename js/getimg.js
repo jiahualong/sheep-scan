@@ -1,5 +1,6 @@
 var imgs = document.querySelectorAll('img');
 var urls = {};
+var title = document.querySelector("title").innerHTML;
 console.log(imgs.length);
 for (i = 0; i < imgs.length; i++) {
 
@@ -14,7 +15,7 @@ for (i = 0; i < imgs.length; i++) {
     } else {
         urls[url] = 1;
     }
-
+    
 }
 console.log(JSON.stringify(urls));
 JSON.stringify(urls);
