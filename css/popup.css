@@ -7,7 +7,6 @@ body {
     padding: 5px;
 }
 
-
 .disable {
     display: none;
 }
@@ -19,7 +18,8 @@ body {
 }
 
 .dbinfo {
-    margin: 50px 10px 10px 10px;
+    margin: 50px 10px;
+    margin-top: 100px;
     padding: 10px;
     text-align: left;
     background: #f7f7f7;
@@ -45,13 +45,14 @@ body {
     height: 50px;
     background: #eeeeee;
 }
+
 button {
     margin: 10px;
     float: left;
 }
 
 .tip {
-    margin: 10px;
+    margin: 20px;
     float: left;
     font-size: 8px;
     color: #333;

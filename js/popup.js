@@ -5,8 +5,6 @@
  *
  ***********************************************************************
  */
-var imagesList = {};
-var imagesIndex = 0;
 
 /** 检测图片 */
 function check() {
@@ -17,36 +15,42 @@ function check() {
     _resultArea.innerHTML = "";
     _resultImgArea.innerHTML = "";
 
-    log();
+    chrome.tabs.query({
+        active: true,
+        lastFocusedWindow: true
+    }, function (array_of_tabs) {
+        var tab = array_of_tabs[0];
+        url = tab.url;
+        injectJS = "js/inject-default.js";
 
-    chrome.tabs.executeScript(
-        null, {file: "js/getimg.js"},
-        function (imagesJSONList) {
-            var _imagesJSONList = JSON.parse(imagesJSONList);
+        if (url.match("https?:\/\/www.google.com")) {
+            document.querySelector("#result").innerHTML = "math google.com";
+            injectJS = "js/inject-google.js";
+        }
 
-            if (isEmptyObject(_imagesJSONList)) {
-                setIconOff();
-                log("未检测到图片")
-                _resultArea.innerHTML = "";
-                _resultImgArea.innerHTML = "";
+        chrome.tabs.executeScript(
+            null, {file: injectJS},
+            function (imgsstr) {
+                var imgs = JSON.parse(imgsstr);
 
-            } else {
-                imagesList = _imagesJSONList;
-                setIconOn();
-                log("检测完成");
+                if (isEmptyObject(imgs)) {
+                    setIconOff();
+                    log("未检测到图片")
+                    _resultArea.innerHTML = "";
+                    _resultImgArea.innerHTML = "";
 
-                var i;
-                for (i = 0; i < _imagesJSONList.length; i++) {
-                    if (window.localStorage[_imagesJSONList[i].url]) {
-                    } else {
-                        window.localStorage[_imagesJSONList[i].url] = JSON.stringify(_imagesJSONList[i]);
-                        _resultArea.innerHTML += _imagesJSONList[i].url + "<br />";
-                        _resultImgArea.innerHTML += "<img src='" + _imagesJSONList[i].url + "' /><br />";
+                } else {
+                    imagesList = imgs;
+                    setIconOn();
+                    log("检测完成");
+
+                    for (var i = 0; i < imgs.length; i++) {
+                        _resultArea.innerHTML += imgs[i].url + "<br />";
+                        _resultImgArea.innerHTML += "<img src='" + imgs[i].url + "' /><br />";
                     }
                 }
-            }
-        });
-
+            });
+    });
 }
 
 /**
@@ -56,8 +60,6 @@ function check() {
  */
 function copyResult() {
     _copyFrom = document.querySelector("#result");
-
-    log();
 
     if (_copyFrom.innerHTML == '') {
         log("没有拷贝的信息");
@@ -71,55 +73,6 @@ function copyResult() {
     log(msg);
 }
 
-/**
- * 下载最后一张图片
- */
-function downloadPic() {
-
-    imagesIndex++;
-    var title = getTitle();
-    // log("下载图片中");
-    log(title);
-    var url;
-    for (url in imagesList) {
-        chrome.downloads.download({url: url},
-            function (id) {
-            });
-    }
-    // log("下载完成");
-}
-
-/**
- * 显示DB内容
- */
-function showDB() {
-    var db = chrome.extension.getBackgroundPage().db;
-    var dbinfo = document.querySelector("#dbinfo");
-    if (dbinfo.classList.contains("disable")) {
-        dbinfo.innerHTML = JSON.stringify(db);
-        dbinfo.classList.remove("disable");
-    } else {
-        dbinfo.classList.add("disable");
-    }
-}
-
-/**
- * *************************************************
- * window.storage存储
- * *************************************************
- */
-function clearStorage() {
-    window.localStorage.clear();
-}
-
-function readStorage() {
-    var content = [];
-    for (var i = 0; i < window.localStorage.length; i++) {
-        content.push(JSON.parse(window.localStorage.getItem(window.localStorage.key(i))));
-    }
-    document.querySelector('#dbinfo').innerHTML = JSON.stringify(content);
-    return content;
-}
 
 /** 启动时加载项 */
 document.addEventListener('DOMContentLoaded', function () {
@@ -128,5 +81,58 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('#downloadPic').addEventListener('click', downloadPic);
     document.querySelector('#clearStorage').addEventListener('click', clearStorage);
     document.querySelector('#readStorage').addEventListener('click', readStorage);
+    document.querySelector('#test').addEventListener('click', test);
 });
 
+/***********************************************************
+ *
+ *  公共方法
+ *
+ ***********************************************************
+ */
+
+/**
+ * 打印Log
+ * @param msg
+ */
+function log(msg) {
+    if (isEmptyObject(msg))
+        msg = Math.random();
+    document.querySelector("#tip").classList.remove("disable");
+    document.querySelector("#tip").innerHTML = msg;
+}
+
+/**
+ * 检测对象是否为空
+ * @param e
+ * @returns {number}
+ */
+function isEmptyObject(e) {
+    if (undefined == e || null == e || '' == e)
+        return true;
+    var t;
+    for (t in e)
+        return false;
+    return true;
+}
+
+
+
+
+
+/** 设置图标是否高亮*/
+function setIcon(flag) {
+    if (flag) {
+        chrome.browserAction.setIcon({path: "img/32x32.png"});
+    } else {
+        chrome.browserAction.setIcon({path: "img/32x32-offline.png"});
+    }
+}
+function setIconOn() {
+    setIcon(true);
+}
+
+function setIconOff() {
+    setIcon(false);
+
+}

@@ -28,8 +28,8 @@
         "https://*/*"
       ],
       "js": [
-        "js/getimg.js",
-        "js/getTitle.js"
+        "js/inject-default.js",
+        "js/inject-google.js"
       ]
     }
   ],
