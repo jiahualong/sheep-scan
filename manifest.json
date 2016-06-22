@@ -9,8 +9,8 @@
     "background",
     "clipboardWrite",
     "downloads",
-    "storage"
-
+    "storage",
+    "activeTab"
   ],
   "browser_action": {
     "default_title": "检测图片",
@@ -35,6 +35,9 @@
   ],
   "manifest_version": 2,
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "js/background.js"
+    ],
+    "persistent": false
   }
 }

@@ -14,7 +14,7 @@ for (i = 0; i < imgs.length; i++) {
         url = window.location.protocol + "//" + window.location.hostname + url;
     }
 
-    urls.push({"url": url, "isDownloadFinished": false, "downloadDir": title});
+    urls.push({"url": url, "dtime": null, "dir": title});
 }
 console.log(JSON.stringify(urls));
 JSON.stringify(urls);

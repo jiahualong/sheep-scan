@@ -123,7 +123,6 @@ function readStorage() {
 
 /** 启动时加载项 */
 document.addEventListener('DOMContentLoaded', function () {
-    check();
     document.querySelector('#check').addEventListener('click', check);
     document.querySelector('#copyResult').addEventListener('click', copyResult);
     document.querySelector('#downloadPic').addEventListener('click', downloadPic);
