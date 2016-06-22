@@ -1,0 +1,14 @@
+{
+  "pluginName": {
+    "message": "扫描图片"
+  },
+  "pluginDesc": {
+    "message": "扫描当前页面的图片信息"
+  },
+  "buttonCheck": {
+    "message": "扫描"
+  },
+  "buttonCopyToClip": {
+    "message": "拷贝"
+  }
+}

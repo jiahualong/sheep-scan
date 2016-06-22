@@ -1,0 +1,14 @@
+{
+  "pluginName": {
+    "message": "Scan Picture"
+  },
+  "pluginDesc": {
+    "message": "Scan Html Picture"
+  },
+  "buttonCheck": {
+    "message": "Scan"
+  },
+  "buttonCopyToClip": {
+    "message": "Copy"
+  }
+}
