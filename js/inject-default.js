@@ -1,21 +1,24 @@
+/*******************************************
+ *
+ * 获取页面中所有img的src地址
+ *
+ * *****************************************
+ *
+ * @type {NodeList}
+ */
+console.log("use inject-default.js");
 var imgs = document.querySelectorAll('img');
 var urls = [];
-var title = document.querySelector("title").innerHTML;
 console.log(imgs.length);
-for (i = 0; i < imgs.length; i++) {
 
+for (var i = 0; i < imgs.length; i++) {
     var url = imgs[i].getAttribute('src');
-
-    if (null == url)
+    if (null == url) {
         continue;
-
-    if (url.match("^http://") || url.match("^https://")) {
-    } else {
+    }
+    if (null == url.match("^http://") && null == url.match("^https://")) {
         url = window.location.protocol + "//" + window.location.hostname + url;
     }
-
-    urls.push({"url": url, "dtime": null, "dir": title});
+    urls.push({"url": url});
 }
-console.log(JSON.stringify(urls));
 JSON.stringify(urls);
-
