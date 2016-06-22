@@ -9,11 +9,8 @@
 /** 检测图片 */
 function check() {
 
-    _resultArea = document.querySelector("#result");
-    _resultImgArea = document.querySelector("#resultImg");
-
-    _resultArea.innerHTML = "";
-    _resultImgArea.innerHTML = "";
+    result = document.querySelector("#result");
+    resultImg = document.querySelector("#resultImg");
 
     chrome.tabs.query({
         active: true,
@@ -32,21 +29,17 @@ function check() {
             null, {file: injectJS},
             function (imgsstr) {
                 var imgs = JSON.parse(imgsstr);
-
                 if (isEmptyObject(imgs)) {
                     setIconOff();
                     log("未检测到图片")
-                    _resultArea.innerHTML = "";
-                    _resultImgArea.innerHTML = "";
 
                 } else {
-                    imagesList = imgs;
                     setIconOn();
                     log("检测完成");
 
                     for (var i = 0; i < imgs.length; i++) {
-                        _resultArea.innerHTML += imgs[i].url + "<br />";
-                        _resultImgArea.innerHTML += "<img src='" + imgs[i].url + "' /><br />";
+                        result.innerHTML += imgs[i].url + "<br />";
+                        resultImg.innerHTML += "<img src='" + imgs[i].url + "' /><br />";
                     }
                 }
             });
@@ -78,10 +71,6 @@ function copyResult() {
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('#check').addEventListener('click', check);
     document.querySelector('#copyResult').addEventListener('click', copyResult);
-    document.querySelector('#downloadPic').addEventListener('click', downloadPic);
-    document.querySelector('#clearStorage').addEventListener('click', clearStorage);
-    document.querySelector('#readStorage').addEventListener('click', readStorage);
-    document.querySelector('#test').addEventListener('click', test);
 });
 
 /***********************************************************
@@ -115,10 +104,6 @@ function isEmptyObject(e) {
         return false;
     return true;
 }
-
-
-
-
 
 /** 设置图标是否高亮*/
 function setIcon(flag) {

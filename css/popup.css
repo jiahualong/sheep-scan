@@ -3,26 +3,27 @@
 
 body {
     width: 500px;
-    margin: 5px;
-    padding: 5px;
+    margin: 0px;
+    padding: 0px;
 }
 
 .disable {
     display: none;
 }
 
+.toolbar {
+    position: fixed;
+    right: 0px;
+    left: 0px;
+    width: 100%;
+    height: 50px;
+    background: #eeeeee;
+}
+
 .result {
     margin: 10px;
     width: 100%;
     text-align: left;
-}
-
-.dbinfo {
-    margin: 50px 10px;
-    margin-top: 100px;
-    padding: 10px;
-    text-align: left;
-    background: #f7f7f7;
 }
 
 .resultImg {
@@ -35,28 +36,5 @@ body {
 .resultImg > img {
     margin: 10px 0 0 0;
     border: 5px solid darkgray;
-}
-
-.toolbar {
-    position: fixed;
-    right: 0px;
-    left: 0px;
-    width: 100%;
-    height: 50px;
-    background: #eeeeee;
-}
-
-button {
-    margin: 10px;
-    float: left;
-}
-
-.tip {
-    margin: 20px;
-    float: left;
-    font-size: 8px;
-    color: #333;
-    width: 200px;
-    text-align: center;
 }
 
