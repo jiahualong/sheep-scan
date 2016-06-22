@@ -9,8 +9,11 @@
 /** 检测图片 */
 function check() {
 
-    result = document.querySelector("#result");
-    resultImg = document.querySelector("#resultImg");
+    content = document.querySelector(".content > ul");
+    copy = document.querySelector(".copy");
+
+    content.innerHTML = "";
+    copy.innerHTML = "";
 
     chrome.tabs.query({
         active: true,
@@ -29,18 +32,18 @@ function check() {
             null, {file: injectJS},
             function (imgsstr) {
                 var imgs = JSON.parse(imgsstr);
-                if (isEmptyObject(imgs)) {
-                    setIconOff();
-                    log("未检测到图片")
-
-                } else {
-                    setIconOn();
-                    log("检测完成");
-
+                if (!isEmptyObject(imgs)) {
                     for (var i = 0; i < imgs.length; i++) {
-                        result.innerHTML += imgs[i].url + "<br />";
-                        resultImg.innerHTML += "<img src='" + imgs[i].url + "' /><br />";
+                        content.innerHTML +=
+                            "<li>"
+                            + "<img src='" + imgs[i].url + "' />"
+                            + imgs[i].url
+                            + "</li>";
+                        copy.innerHTML += imgs[i].url + "<br />";
                     }
+                    log("扫描完成")
+                } else {
+                    log("未检测到图片")
                 }
             });
     });
@@ -52,7 +55,8 @@ function check() {
  * @param tipArea 拷贝提示信息Div
  */
 function copyResult() {
-    _copyFrom = document.querySelector("#result");
+    var _copyFrom = "";
+    _copyFrom = document.querySelector(".copy");
 
     if (_copyFrom.innerHTML == '') {
         log("没有拷贝的信息");
@@ -65,30 +69,12 @@ function copyResult() {
     var msg = document.execCommand('copy') ? "拷贝完成!" : "拷贝失败";
     log(msg);
 }
-
-
-/** 启动时加载项 */
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelector('#check').addEventListener('click', check);
-    document.querySelector('#copyResult').addEventListener('click', copyResult);
-});
-
-/***********************************************************
- *
- *  公共方法
- *
- ***********************************************************
- */
-
 /**
  * 打印Log
  * @param msg
  */
 function log(msg) {
-    if (isEmptyObject(msg))
-        msg = Math.random();
-    document.querySelector("#tip").classList.remove("disable");
-    document.querySelector("#tip").innerHTML = msg;
+    document.querySelector(".log").innerHTML = msg;
 }
 
 /**
@@ -105,19 +91,17 @@ function isEmptyObject(e) {
     return true;
 }
 
-/** 设置图标是否高亮*/
-function setIcon(flag) {
-    if (flag) {
-        chrome.browserAction.setIcon({path: "img/32x32.png"});
-    } else {
-        chrome.browserAction.setIcon({path: "img/32x32-offline.png"});
-    }
-}
-function setIconOn() {
-    setIcon(true);
-}
+/**
+ * 绑定按钮事件
+ */
+document.addEventListener('DOMContentLoaded', function () {
+    // document.querySelector('#check').innerText = chrome.i18n.getMessage("buttonCheck");
+    // document.querySelector('#copyResult').innerText = chrome.i18n.getMessage("buttonCopyToClip");
+    document.querySelector('#check').addEventListener('click', check);
+    document.querySelector('#copyResult').addEventListener('click', copyResult);
+    check();
+});
 
-function setIconOff() {
-    setIcon(false);
 
-}
+
+

@@ -1,40 +1,87 @@
+/*************************************************************
+ Global
+ *************************************************************/
 * {
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
 }
 
 body {
     width: 500px;
-    margin: 0px;
-    padding: 0px;
 }
 
-.disable {
-    display: none;
+/*************************************************************
+ title
+ *************************************************************/
+
+.title {
+    margin: 10px 10px 0 10px;
+    height: 37px;
+    background: url("../icons/icon_128x128.png") no-repeat;
+    background-size: 32px;
+    border-bottom: #eee 1px solid;
+
 }
 
-.toolbar {
-    position: fixed;
-    right: 0px;
-    left: 0px;
-    width: 100%;
-    height: 50px;
-    background: #eeeeee;
+.title-word {
+    float: left;
+    width: 20px;
+    margin: 0 0 0 35px;
+    font-size: 24px;
+
 }
 
-.result {
-    margin: 10px;
-    width: 100%;
-    text-align: left;
+.title-button-area {
+    float: right;
+    width: 100px;
+    margin: 0 10px 0 0;
 }
 
-.resultImg {
-    margin: 10px;
-    width: 100%;
-    text-align: left;
-    margin-top: 50px;
+/*************************************************************
+ content
+ *************************************************************/
+.content {
+    margin: 10px 0 0 10px;
+    height: 400px;
+    overflow: scroll;
 }
 
-.resultImg > img {
+.content ul img {
+    width: 32px;
+    height: 32px;
+    background-color: #eeeeee;
+
+}
+
+.content li {
+    list-style-type: none;
+    height: 32px;
     margin: 10px 0 0 0;
-    border: 5px solid darkgray;
 }
 
+.copy {
+    /*display: none;*/
+    background: #eeeeee;
+    height:1px;
+    width:1px;
+    overflow: hidden;
+
+}
+/*************************************************************
+ foot
+ *************************************************************/
+.foot {
+    width:500px;
+    margin: 10px 0 0 10px;
+    height: 10px;
+    /*background: greenyellow;*/
+}
+
+.foot > .log {
+    display: block;
+    width:500px;
+    font-size:9px;
+    color: #333;
+    text-align: center;
+}
