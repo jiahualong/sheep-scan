@@ -5,43 +5,45 @@
  *
  ***********************************************************************
  */
+
 /** 检测图片 */
 function check() {
 
-    _tipArea = document.querySelector("#tip");
-    _resultArea = document.querySelector("#result");
-    _resultImgArea = document.querySelector("#resultImg");
+    result = document.querySelector("#result");
+    resultImg = document.querySelector("#resultImg");
 
-    _tipArea.innerHTML = "";
-    _resultArea.innerHTML = "";
-    _resultImgArea.innerHTML = "";
+    chrome.tabs.query({
+        active: true,
+        lastFocusedWindow: true
+    }, function (array_of_tabs) {
+        var tab = array_of_tabs[0];
+        url = tab.url;
+        injectJS = "js/inject-default.js";
 
-    log();
+        if (url.match("https?:\/\/www.google.com")) {
+            document.querySelector("#result").innerHTML = "math google.com";
+            injectJS = "js/inject-google.js";
+        }
 
-    chrome.tabs.executeScript(
-        null, {file: "js/getimg.js"},
-        function (imagesJSONList) {
-            imagesJSONList = JSON.parse(imagesJSONList);
+        chrome.tabs.executeScript(
+            null, {file: injectJS},
+            function (imgsstr) {
+                var imgs = JSON.parse(imgsstr);
+                if (isEmptyObject(imgs)) {
+                    setIconOff();
+                    log("未检测到图片")
 
-            if (isEmptyObject(imagesJSONList)) {
-                setIcon(false);
-                _tipArea.innerHTML = "未检测到图片";
-                _tipArea.classList.remove("disable");
-                _resultArea.innerHTML = "";
-                _resultImgArea.innerHTML = "";
+                } else {
+                    setIconOn();
+                    log("检测完成");
 
-            } else {
-
-                setIcon(true);
-                _tipArea.innerHTML = "";
-                _tipArea.classList.add("disable");
-
-                for (key in imagesJSONList) {
-                    _resultArea.innerHTML += key + "<br />";
-                    _resultImgArea.innerHTML += "<img src='" + key + "' /><br />";
+                    for (var i = 0; i < imgs.length; i++) {
+                        result.innerHTML += imgs[i].url + "<br />";
+                        resultImg.innerHTML += "<img src='" + imgs[i].url + "' /><br />";
+                    }
                 }
-            }
-        });
+            });
+    });
 }
 
 /**
@@ -51,12 +53,9 @@ function check() {
  */
 function copyResult() {
     _copyFrom = document.querySelector("#result");
-    _tipArea = document.querySelector("#tip");
-
-    log();
 
     if (_copyFrom.innerHTML == '') {
-        _tipArea.innerHTML = "没有拷贝的信息";
+        log("没有拷贝的信息");
         return;
     }
 
@@ -64,19 +63,15 @@ function copyResult() {
     range.selectNode(_copyFrom);
     window.getSelection().addRange(range);
     var msg = document.execCommand('copy') ? "拷贝完成!" : "拷贝失败";
-    _tipArea.innerHTML = msg;
-    _tipArea.classList.remove("disable");
+    log(msg);
 }
 
 
-/** 设置图标是否高亮*/
-function setIcon(flag) {
-    if (flag) {
-        chrome.browserAction.setIcon({path: "img/32x32.png"});
-    } else {
-        chrome.browserAction.setIcon({path: "img/32x32-offline.png"});
-    }
-}
+/** 启动时加载项 */
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('#check').addEventListener('click', check);
+    document.querySelector('#copyResult').addEventListener('click', copyResult);
+});
 
 /***********************************************************
  *
@@ -87,10 +82,13 @@ function setIcon(flag) {
 
 /**
  * 打印Log
- * @param randomDiv
+ * @param msg
  */
-function log(randomDiv) {
-    document.querySelector("#tip").innerHTML = randomDiv + Math.random();
+function log(msg) {
+    if (isEmptyObject(msg))
+        msg = Math.random();
+    document.querySelector("#tip").classList.remove("disable");
+    document.querySelector("#tip").innerHTML = msg;
 }
 
 /**
@@ -107,12 +105,19 @@ function isEmptyObject(e) {
     return true;
 }
 
+/** 设置图标是否高亮*/
+function setIcon(flag) {
+    if (flag) {
+        chrome.browserAction.setIcon({path: "img/32x32.png"});
+    } else {
+        chrome.browserAction.setIcon({path: "img/32x32-offline.png"});
+    }
+}
+function setIconOn() {
+    setIcon(true);
+}
 
-/** 启动时加载项 */
-document.addEventListener('DOMContentLoaded', function () {
-    check();
-    document.querySelector('#check').addEventListener('click', check);
-    document.querySelector('#copyResult').addEventListener('click', copyResult);
-    //chrome.browserAction.onClicked.addListener(check()); //点击图标时进行检测
-});
+function setIconOff() {
+    setIcon(false);
 
+}

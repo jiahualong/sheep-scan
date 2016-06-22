@@ -12,3 +12,6 @@
 
 ## 使用
 在需要获取图片的页面点击”图标"
+
+## 关于下载
+拷贝出的URL可由[chrono-download-manager](https://chrome.google.com/webstore/detail/chrono-download-manager/mciiogijehkdemklbdcbfkefimifhecn)插件进行下载.
