@@ -5,11 +5,8 @@
   "permissions": [
     "http://*/*",
     "https://*/*",
-    "tabs",
-    "background",
     "clipboardWrite",
-    "downloads",
-    "storage",
+    "tabs",
     "activeTab"
   ],
   "browser_action": {
@@ -20,6 +17,11 @@
       "64": "img/64x64.png",
       "128": "img/128x128.png"
     }
+  },
+  "icons": {
+    "16": "img/32x32.png",
+    "48": "img/32x32.png",
+    "128": "img/32x32.png"
   },
   "content_scripts": [
     {
@@ -33,11 +35,5 @@
       ]
     }
   ],
-  "manifest_version": 2,
-  "background": {
-    "scripts": [
-      "js/background.js"
-    ],
-    "persistent": false
-  }
+  "manifest_version": 2
 }
