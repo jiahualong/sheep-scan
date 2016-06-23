@@ -1,6 +1,6 @@
 {
   "pluginName": {
-    "message": "扫描图片"
+    "message": "Sheep Scan"
   },
   "pluginDesc": {
     "message": "扫描当前页面的图片信息"
@@ -10,5 +10,17 @@
   },
   "buttonCopyToClip": {
     "message": "拷贝"
+  },
+  "tipCopyFinished": {
+    "message": "拷贝完成"
+  },
+  "tipCopyFailt": {
+    "message": "拷贝失败"
+  },
+  "tipScanFinished": {
+    "message": "扫描完成"
+  },
+  "tipScanResultEmpty": {
+    "message": "未扫描到任何东西"
   }
 }

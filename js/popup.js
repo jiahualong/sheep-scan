@@ -7,7 +7,7 @@
  */
 
 /** 检测图片 */
-function check() {
+function scanPage() {
 
     content = document.querySelector(".content > ul");
     copy = document.querySelector(".copy");
@@ -36,14 +36,14 @@ function check() {
                     for (var i = 0; i < imgs.length; i++) {
                         content.innerHTML +=
                             "<li>"
-                            + "<img src='" + imgs[i].url + "' />"
+                            + "<img src='" + imgs[i].url + "' /><span>"
                             + imgs[i].url
-                            + "</li>";
+                            + "</span></li>";
                         copy.innerHTML += imgs[i].url + "<br />";
                     }
-                    log("扫描完成")
+                    showTip(chrome.i18n.getMessage("tipScanFinished"));
                 } else {
-                    log("未检测到图片")
+                    showTip(chrome.i18n.getMessage("tipScanResultEmpty"));
                 }
             });
     });
@@ -59,22 +59,22 @@ function copyResult() {
     _copyFrom = document.querySelector(".copy");
 
     if (_copyFrom.innerHTML == '') {
-        log("没有拷贝的信息");
+        showTip("没有拷贝的信息");
         return;
     }
 
     var range = document.createRange();
     range.selectNode(_copyFrom);
     window.getSelection().addRange(range);
-    var msg = document.execCommand('copy') ? "拷贝完成!" : "拷贝失败";
-    log(msg);
+    var msg = document.execCommand('copy') ? chrome.i18n.getMessage("tipCopyFinished") : chrome.i18n.getMessage("tipCopyFailt");
+    showTip(msg);
 }
 /**
- * 打印Log
+ * 显示提示
  * @param msg
  */
-function log(msg) {
-    document.querySelector(".log").innerHTML = msg;
+function showTip(msg) {
+    document.querySelector(".tipArea").innerHTML = msg;
 }
 
 /**
@@ -95,13 +95,15 @@ function isEmptyObject(e) {
  * 绑定按钮事件
  */
 document.addEventListener('DOMContentLoaded', function () {
-    // document.querySelector('#check').innerText = chrome.i18n.getMessage("buttonCheck");
-    // document.querySelector('#copyResult').innerText = chrome.i18n.getMessage("buttonCopyToClip");
-    document.querySelector('#check').addEventListener('click', check);
+
+    //i18n init
+    document.querySelector('.title-word').innerHTML = chrome.i18n.getMessage("pluginName");
+    // document.querySelector('#scanPage').setAttribute('value', chrome.i18n.getMessage("buttonCheck"));
+    document.querySelector('#copyResult').setAttribute('value', chrome.i18n.getMessage("buttonCopyToClip"));
+
+    //bind click
+    // document.querySelector('#scanPage').addEventListener('click', scanPage);
     document.querySelector('#copyResult').addEventListener('click', copyResult);
-    check();
+
+    scanPage();
 });
-
-
-
-
