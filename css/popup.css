@@ -1,12 +1,6 @@
 /*************************************************************
  Global
  *************************************************************/
-* {
-    padding: 0;
-    margin: 0;
-    background-color: #fff;
-}
-
 body {
     width: 500px;
 }
@@ -20,62 +14,91 @@ body {
     height: 37px;
     background: url("../icons/icon_128x128.png") no-repeat;
     background-size: 32px;
-    border-bottom: #eee 1px solid;
-
+    /*border-bottom: #eee 1px solid;*/
 }
 
 .title-word {
     float: left;
-    width: 20px;
+    width: 140px;
     margin: 0 0 0 35px;
     font-size: 24px;
+    /*background: rebeccapurple;*/
 
 }
 
 .title-button-area {
     float: right;
-    width: 100px;
+    width: 290px;
     margin: 0 10px 0 0;
+    /*background: #000;*/
+}
+
+.title-button-area input {
+    float: right;
+    margin: 0 0 0 10px;
 }
 
 /*************************************************************
  content
  *************************************************************/
 .content {
-    margin: 10px 0 0 10px;
+    margin: 0;
     height: 400px;
     overflow: scroll;
+    /*background-color: #eeeeee;*/
+    border-top: #eeeeee 1px solid;
+    border-bottom: #eeeeee 1px solid;
+}
+
+.content ul {
+
+    margin: 0 0 0 10px;
+    padding: 0;
+    list-style-type: none;
+    width: 480px;
+    /*background-color: gold;*/
+}
+
+.content li {
+    height: 32px;
+    width: 480px;
+    margin: 5px 0 0 0;
+    /*background-color: greenyellow;*/
 }
 
 .content ul img {
     width: 32px;
     height: 32px;
-    background-color: #eeeeee;
-
+    /*background-color: red;*/
+    float: left;
+    border: 1px #1B9AF7 solid;
 }
 
-.content li {
-    list-style-type: none;
+.content li span {
+    float: left;
+    /*background-color: darkolivegreen;*/
+    display: block;
+    width: 440px;
     height: 32px;
-    width:400px;
-    /*background: red;*/
-    margin: 10px 0 0 0;
-    /*overflow: scroll;*/
+    line-height: 32px;
+    margin: 0 0 0 5px;
+    overflow: scroll;
 }
 
 .copy {
     /*display: none;*/
-    background: #eeeeee;
-    height:1px;
-    width:1px;
+    /*background: #eeeeee;*/
+    height: 1px;
+    width: 1px;
     overflow: hidden;
 
 }
+
 /*************************************************************
  foot
  *************************************************************/
 .foot {
-    width:500px;
+    width: 500px;
     margin: 10px 0 0 10px;
     height: 10px;
     /*background: greenyellow;*/
@@ -83,8 +106,8 @@ body {
 
 .foot > .log {
     display: block;
-    width:500px;
-    font-size:9px;
+    width: 500px;
+    font-size: 9px;
     color: #333;
     text-align: center;
 }

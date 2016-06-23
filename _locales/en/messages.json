@@ -1,6 +1,6 @@
 {
   "pluginName": {
-    "message": "Scan Picture"
+    "message": "Sheep Scan"
   },
   "pluginDesc": {
     "message": "Scan Html Picture"
@@ -10,5 +10,17 @@
   },
   "buttonCopyToClip": {
     "message": "Copy"
+  },
+  "tipCopyFinished": {
+    "message": "copy finished"
+  },
+  "tipCopyFailt": {
+    "message": "copy failt"
+  },
+  "tipScanFinished": {
+    "message": "Scan Finish"
+  },
+  "tipScanResultEmpty": {
+    "message": "Can't scan any thing"
   }
 }
