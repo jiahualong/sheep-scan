@@ -1,8 +1,12 @@
-# Get Images
-获取页面图片的Chrome插件
+# Sheep Scan
+获取页面图片地址的Chrome插件
+
+## 图示
+
+![0.6版](README/0.6.png)
 
 ## 下载
-    git clone  https://github.com/stanejia/getimgs
+    git clone  https://github.com/stanejia/sheep-scan
 
 ## 安装
 * 使用chrome 访问 [chrome://extensions/](chrome://extensions/)
