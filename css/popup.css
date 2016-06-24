@@ -5,6 +5,10 @@ body {
     width: 500px;
 }
 
+.disable {
+    display: none;
+}
+
 /*************************************************************
  title
  *************************************************************/
@@ -33,7 +37,7 @@ body {
     /*background: #000;*/
 }
 
-.title-button-area input {
+.title-button-area input, button {
     float: right;
     margin: 0 0 0 10px;
 }
@@ -111,3 +115,5 @@ body {
     color: #333;
     text-align: center;
 }
+
+

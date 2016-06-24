@@ -34,11 +34,11 @@ function scanPage() {
                 var imgs = JSON.parse(imgsstr);
                 if (!isEmptyObject(imgs)) {
                     for (var i = 0; i < imgs.length; i++) {
-                        content.innerHTML +=
-                            "<li>"
-                            + "<img src='" + imgs[i].url + "' /><span>"
-                            + imgs[i].url
-                            + "</span></li>";
+                        content.innerHTML += "<li>"
+                            + "<img src='" + imgs[i].url + "' "
+                            + ("true" == window.localStorage["isShowPic"] ? " class=''" : " class='disable' ")
+                            + "/><span>" + imgs[i].url + "</span></li>";
+
                         copy.innerHTML += imgs[i].url + "<br />";
                     }
                     showTip(chrome.i18n.getMessage("tipScanFinished"));
@@ -92,6 +92,36 @@ function isEmptyObject(e) {
 }
 
 /**
+ * 是否显示图片
+ */
+function isShowPic() {
+    if ("true" == window.localStorage["isShowPic"]) {
+        window.localStorage["isShowPic"] = false;
+        document.querySelector("#isShowPic").classList.remove("button-primary");
+        var imgs = document.querySelectorAll(".content img");
+        for (var i = 0; i < imgs.length; i++) {
+            imgs[i].classList.add("disable");
+        }
+    } else {
+        window.localStorage["isShowPic"] = true;
+        document.querySelector("#isShowPic").classList.add("button-primary");
+        var imgs = document.querySelectorAll(".content img");
+        for (var i = 0; i < imgs.length; i++) {
+            imgs[i].classList.remove("disable");
+        }
+    }
+}
+
+/**
+ * 初始化showPic状态
+ */
+function initShowPic() {
+    if ("true" == window.localStorage["isShowPic"]) {
+        document.querySelector("#isShowPic").classList.add("button-primary");
+    }
+}
+
+/**
  * 绑定按钮事件
  */
 document.addEventListener('DOMContentLoaded', function () {
@@ -100,10 +130,12 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.title-word').innerHTML = chrome.i18n.getMessage("pluginName");
     // document.querySelector('#scanPage').setAttribute('value', chrome.i18n.getMessage("buttonCheck"));
     document.querySelector('#copyResult').setAttribute('value', chrome.i18n.getMessage("buttonCopyToClip"));
+    initShowPic();
 
     //bind click
     // document.querySelector('#scanPage').addEventListener('click', scanPage);
     document.querySelector('#copyResult').addEventListener('click', copyResult);
+    document.querySelector('#isShowPic').addEventListener('click', isShowPic);
 
     scanPage();
 });
