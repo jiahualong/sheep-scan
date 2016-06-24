@@ -1,20 +1,29 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/popup.css">
     <link rel="stylesheet" type="text/css" href="css/buttons.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/popup.css">
     <script src="js/popup.js"></script>
 </head>
 <body>
+
+<!--<i  class="fa fa-check-circle"></i>-->
+
 <div class="title">
     <span class="title-word">Sheep</span>
     <span class="title-button-area">
         <!--<input type="button" id="scanPage" value="扫描" class="button button-primary button-pill button-tiny"/>-->
         <input type="button" id="copyResult" value="拷贝" class="button button-primary button-pill button-tiny"/>
+        <button id="isShowPic" class="button button-square button-pill button-tiny" style="float: right;">
+            <i class="fa fa-file-image-o" aria-hidden="true"></i>
+        </button>
     </span>
 </div>
 
-<div class="content"><ul></ul></div>
+<div class="content">
+    <ul></ul>
+</div>
 <div class="foot"><span class="tipArea"></span></div>
 <div class="copy"></div>
 
