@@ -115,10 +115,16 @@ function isShowPic() {
 /**
  * 初始化showPic状态
  */
-function initShowPic() {
+function initInterface() {
+    //isShowPic init
     if ("true" == window.localStorage["isShowPic"]) {
         document.querySelector("#isShowPic").classList.add("button-primary");
     }
+
+    //i18n init
+    document.querySelector('.title-word').innerHTML = chrome.i18n.getMessage("pluginName");
+    // document.querySelector('#scanPage').setAttribute('value', chrome.i18n.getMessage("buttonCheck"));
+    document.querySelector('#copyResult').setAttribute('value', chrome.i18n.getMessage("buttonCopyToClip"));
 }
 
 /**
@@ -126,11 +132,7 @@ function initShowPic() {
  */
 document.addEventListener('DOMContentLoaded', function () {
 
-    //i18n init
-    document.querySelector('.title-word').innerHTML = chrome.i18n.getMessage("pluginName");
-    // document.querySelector('#scanPage').setAttribute('value', chrome.i18n.getMessage("buttonCheck"));
-    document.querySelector('#copyResult').setAttribute('value', chrome.i18n.getMessage("buttonCopyToClip"));
-    initShowPic();
+    initInterface();
 
     //bind click
     // document.querySelector('#scanPage').addEventListener('click', scanPage);
