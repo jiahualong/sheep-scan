@@ -5,11 +5,19 @@
   "pluginDesc": {
     "message": "扫描当前页面的图片信息"
   },
-  "buttonCheck": {
-    "message": "扫描"
+  /////////////////////////////////////
+  "tipScanFinished": {
+    "message": "扫描完成"
   },
+  "tipScanResultEmpty": {
+    "message": "未扫描到任何东西"
+  },
+  /////////////////////////////////////
   "buttonCopyToClip": {
     "message": "拷贝"
+  },
+  "tipButtonCopyToClip": {
+    "message": "拷贝获取的链接地址"
   },
   "tipCopyFinished": {
     "message": "拷贝完成"
@@ -17,10 +25,27 @@
   "tipCopyFailt": {
     "message": "拷贝失败"
   },
-  "tipScanFinished": {
-    "message": "扫描完成"
+  /////////////////////////////////////
+  "buttonDownload": {
+    "message": "下载"
   },
-  "tipScanResultEmpty": {
-    "message": "未扫描到任何东西"
+  "tipButtonDownload": {
+    "message": "下载所有图片"
+  },
+  "tipDownloadStart": {
+    "message": "已添加到下载列表"
+  },
+  /////////////////////////////////////
+  "buttonIsShowPic": {
+    "message": "显图"
+  },
+  "tipButtonIsShowPic": {
+    "message": "图片开关"
+  },
+  "tipShowPic": {
+    "message": "显示图片"
+  },
+  "tipNotShowPic": {
+    "message": "不显示图片"
   }
 }

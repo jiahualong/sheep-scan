@@ -18,7 +18,7 @@ for (var i = 0; i < imgs.length; i++) {
         if (null == url.match("^http://") && null == url.match("^https://")) {
             url = window.location.protocol + "//" + window.location.hostname + url;
         }
-        urls += url + ",";
+        urls += url.replace(/ /g, "%20") + ",";
     }
 
     url = imgs[i].getAttribute('href');
@@ -26,7 +26,7 @@ for (var i = 0; i < imgs.length; i++) {
         if (null == url.match("^http://") && null == url.match("^https://")) {
             url = window.location.protocol + "//" + window.location.hostname + url;
         }
-        urls += url + ",";
+        urls += url.replace(/ /g, "%20") + ",";
     }
 }
 

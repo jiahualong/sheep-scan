@@ -97,7 +97,8 @@ function isShowPic() {
         for (var i = 0; i < imgs.length; i++) {
             imgs[i].classList.add("disable");
         }
-        showTip("开始显示图片");
+        showTip(chrome.i18n.getMessage("tipNotShowPic"));
+        document.querySelector('#isShowPic').setAttribute('title', chrome.i18n.getMessage("tipNotShowPic"));
     } else {
         window.localStorage["isShowPic"] = true;
         document.querySelector("#isShowPic").classList.add("button-primary");
@@ -105,7 +106,8 @@ function isShowPic() {
         for (var i = 0; i < imgs.length; i++) {
             imgs[i].classList.remove("disable");
         }
-        showTip("不再显示图片");
+        showTip(chrome.i18n.getMessage("tipShowPic"));
+        document.querySelector('#isShowPic').setAttribute('title', chrome.i18n.getMessage("tipShowPic"));
     }
 }
 
@@ -120,7 +122,7 @@ function isAutoScan() {
         for (var i = 0; i < imgs.length; i++) {
             imgs[i].classList.add("disable");
         }
-        showTip("打开了自动扫描");
+        showTip("");
     } else {
         window.localStorage["isAutoScan"] = true;
         document.querySelector("#isAutoScan").classList.add("button-primary");
@@ -128,9 +130,10 @@ function isAutoScan() {
         for (var i = 0; i < imgs.length; i++) {
             imgs[i].classList.remove("disable");
         }
-        showTip("关闭了自动扫描");
+        showTip("");
     }
 }
+
 
 /**
  * 下载
@@ -152,6 +155,9 @@ function initInterface() {
     //isShowPic init
     if ("true" == window.localStorage["isShowPic"]) {
         document.querySelector("#isShowPic").classList.add("button-primary");
+        document.querySelector('#isShowPic').setAttribute('title', chrome.i18n.getMessage("tipShowPic"));
+    } else {
+        document.querySelector('#isShowPic').setAttribute('title', chrome.i18n.getMessage("tipNotShowPic"));
     }
     /**
      if ("true" == window.localStorage["isAutoScan"]) {
@@ -161,7 +167,15 @@ function initInterface() {
     //i18n init
     document.querySelector('.title-word').innerHTML = chrome.i18n.getMessage("pluginName");
     // document.querySelector('#scanPage').setAttribute('value', chrome.i18n.getMessage("buttonCheck"));
+
     document.querySelector('#copyResult').setAttribute('value', chrome.i18n.getMessage("buttonCopyToClip"));
+    document.querySelector('#download').setAttribute('value', chrome.i18n.getMessage("buttonDownload"));
+    document.querySelector('#isShowPic').setAttribute('value', chrome.i18n.getMessage("buttonIsShowPic"));
+
+    document.querySelector('#copyResult').setAttribute('title', chrome.i18n.getMessage("tipButtonCopyToClip"));
+    document.querySelector('#download').setAttribute('title', chrome.i18n.getMessage("tipButtonDownload"));
+    // document.querySelector('#isShowPic').setAttribute('title', chrome.i18n.getMessage("tipButtonIsShowPic"));
+
 }
 
 /**
