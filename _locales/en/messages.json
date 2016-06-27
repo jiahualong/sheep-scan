@@ -3,24 +3,49 @@
     "message": "Sheep Scan"
   },
   "pluginDesc": {
-    "message": "Scan Html Picture"
+    "message": "Scan Page Image"
   },
-  "buttonCheck": {
-    "message": "Scan"
+  /////////////////////////////////////
+  "tipScanFinished": {
+    "message": "Scan Finished"
   },
+  "tipScanResultEmpty": {
+    "message": "Scan Empty"
+  },
+  /////////////////////////////////////
   "buttonCopyToClip": {
     "message": "Copy"
   },
+  "tipButtonCopyToClip": {
+    "message": "Copy URLs"
+  },
   "tipCopyFinished": {
-    "message": "copy finished"
+    "message": "Copy Finished"
   },
   "tipCopyFailt": {
-    "message": "copy failt"
+    "message": "Copy Faild"
   },
-  "tipScanFinished": {
-    "message": "Scan Finish"
+  /////////////////////////////////////
+  "buttonDownload": {
+    "message": "Download"
   },
-  "tipScanResultEmpty": {
-    "message": "Can't scan any thing"
+  "tipButtonDownload": {
+    "message": "Download All Images"
+  },
+  "tipDownloadStart": {
+    "message": "Add to Download List"
+  },
+  /////////////////////////////////////
+  "buttonIsShowPic": {
+    "message": "PicSwitch"
+  },
+  "tipButtonIsShowPic": {
+    "message": "Images Switch"
+  },
+  "tipShowPic": {
+    "message": "Show Images"
+  },
+  "tipNotShowPic": {
+    "message": "Don't Show Images"
   }
 }
