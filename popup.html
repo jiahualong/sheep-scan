@@ -8,16 +8,31 @@
 </head>
 <body>
 
-<!--<i  class="fa fa-check-circle"></i>-->
-
 <div class="title">
     <span class="title-word">Sheep</span>
     <span class="title-button-area">
-        <!--<input type="button" id="scanPage" value="扫描" class="button button-primary button-pill button-tiny"/>-->
-        <input type="button" id="copyResult" value="拷贝" class="button button-primary button-pill button-tiny"/>
-        <button id="isShowPic" class="button button-square button-pill button-tiny" style="float: right;">
+
+        <!--拷贝-->
+        <button id="copyResult" class="button button-square button-pill button-tiny right left10px">
+            <i class="fa fa-files-o" aria-hidden="true"></i>
+        </button>
+
+        <!--下载-->
+        <button id="download" class="button button-square button-pill button-tiny right left10px">
+            <i class="fa fa-download" aria-hidden="true"></i>
+        </button>
+
+        <!--显示图片开关-->
+        <button id="isShowPic" class="button button-square button-pill button-tiny right left10px">
             <i class="fa fa-file-image-o" aria-hidden="true"></i>
         </button>
+
+        <!-- 自动扫描开关-->
+        <!--
+        <button id="isAutoScan" class="button button-square button-pill button-tiny right left10px">
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+        -->
     </span>
 </div>
 

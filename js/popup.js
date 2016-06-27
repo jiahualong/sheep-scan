@@ -97,12 +97,50 @@ function isShowPic() {
         for (var i = 0; i < imgs.length; i++) {
             imgs[i].classList.add("disable");
         }
+        showTip("开始显示图片");
     } else {
         window.localStorage["isShowPic"] = true;
         document.querySelector("#isShowPic").classList.add("button-primary");
         var imgs = document.querySelectorAll(".content img");
         for (var i = 0; i < imgs.length; i++) {
             imgs[i].classList.remove("disable");
+        }
+        showTip("不再显示图片");
+    }
+}
+
+/**
+ * 打开popop时是否自动扫描页面
+ */
+function isAutoScan() {
+    if ("true" == window.localStorage["isAutoScan"]) {
+        window.localStorage["isAutoScan"] = false;
+        document.querySelector("#isAutoScan").classList.remove("button-primary");
+        var imgs = document.querySelectorAll(".content img");
+        for (var i = 0; i < imgs.length; i++) {
+            imgs[i].classList.add("disable");
+        }
+        showTip("打开了自动扫描");
+    } else {
+        window.localStorage["isAutoScan"] = true;
+        document.querySelector("#isAutoScan").classList.add("button-primary");
+        var imgs = document.querySelectorAll(".content img");
+        for (var i = 0; i < imgs.length; i++) {
+            imgs[i].classList.remove("disable");
+        }
+        showTip("关闭了自动扫描");
+    }
+}
+
+/**
+ * 下载
+ */
+function download() {
+    var urls = document.querySelector(".copy").innerText.split("\n");
+    for (var i = 0; i < urls.length; i++) {
+        if (urls[i].length > 0) {
+            chrome.downloads.download({url: urls[i]}, function (id) {
+            });
         }
     }
 }
@@ -115,6 +153,10 @@ function initInterface() {
     if ("true" == window.localStorage["isShowPic"]) {
         document.querySelector("#isShowPic").classList.add("button-primary");
     }
+    /**
+     if ("true" == window.localStorage["isAutoScan"]) {
+        document.querySelector("#isAutoScan").classList.add("button-primary");
+    }*/
 
     //i18n init
     document.querySelector('.title-word').innerHTML = chrome.i18n.getMessage("pluginName");
@@ -126,13 +168,14 @@ function initInterface() {
  * 绑定按钮事件
  */
 document.addEventListener('DOMContentLoaded', function () {
-
     initInterface();
 
     //bind click
-    // document.querySelector('#scanPage').addEventListener('click', scanPage);
+    // document.querySelector('#isAutoScan').addEventListener('click', isAutoScan);
     document.querySelector('#copyResult').addEventListener('click', copyResult);
     document.querySelector('#isShowPic').addEventListener('click', isShowPic);
+    document.querySelector('#download').addEventListener('click', download);
 
+    // "true" == window.localStorage["isAutoScan"] ? scanPage() : null;
     scanPage();
 });
